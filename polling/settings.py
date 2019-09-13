@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'django.contrib.admin',
     'survey.apps.SurveyConfig',
+    'accounts.apps.AccountsConfig',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -123,5 +124,6 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'polling/static')
+    os.path.join(BASE_DIR, 'polling/static'),
+    os.path.join(BASE_DIR, 'survey/static')
 ]
