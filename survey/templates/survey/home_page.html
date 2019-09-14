@@ -6,46 +6,88 @@
 
 <link rel="stylesheet" href="{% static 'registration_form.css' %}">
 
+
+<script>
+    switch_anchor_values = ["Sign in", "Sign up"]
+    form_messages_values= ["Already have an account?", "Don't have an account?"]
+    form_submit_button_values = ["Register Now","Login"]
+    form_heading_values = ["Register","Login"]
+    form_desc_values = ["Create your account. It's free and only takes a minute.","Login to an existing account."]
+    form_url_values = ["{% url 'signup' %}", "{% url 'login' %}"]
+
+    signup_url = "{% url 'signup' %}"
+    login_url = "{% url 'login' %}"
+    console.log(signup_url)
+    console.log(login_url)
+
+        function checkPasswordMatch() {
+            
+            var password = $("#password").val();
+            var confirmPassword = $("#confirm_password").val();
+            console.log("inside checkPasswordMatch function")
+            console.log(password + " " + confirmPassword)
+            if (password != confirmPassword)
+                $("#server_messages").html("Passwords do not match!");
+            else
+                $("#server_messages").html(" ");
+        }
+        $(document).ready(function () {
+            console.log("Document is Ready")
+            $("#confirm_password").keyup(checkPasswordMatch);
+        });
+
+        function switchForm(){
+            console.log("Switching Form ")
+            $("#switch_anchor").text($("#switch_anchor").text()==switch_anchor_values[0]?switch_anchor_values[1]:switch_anchor_values[0])
+            $("#form_message").text($("#form_message").text() == form_messages_values[0]?form_messages_values[1]:form_messages_values[0])
+            $("#form_submit_button").text($("#form_submit_button").text() == form_submit_button_values[0]?form_submit_button_values[1]:form_submit_button_values[0])
+            $("#form_heading").text($("#form_heading").text() == form_heading_values[0]?form_heading_values[1]:form_heading_values[0])
+            $("#form_desc").text($("#form_desc").text() == form_desc_values[0]?form_desc_values[1]:form_desc_values[0])
+            $("#email").is(":hidden")?$("#email").show():$("#email").hide()
+            $("#confirm_password").is(":hidden")?$("#confirm_password").show():$("#confirm_password").hide()
+            $("#form").attr("action",$("#form").attr("action")==form_url_values[0]?form_url_values[1]:form_url_values[0]);
+        }
+    </script>
 <div class="row">
     <div class="col-sm-2 col-md-4 col-lg-8">This is the homepage</div>
     <div class="col-sm-10 col-md-8 col-lg-4">
         <div class="signup-form">
-            <form action="{% url 'signup' %}" method="post">
+            <form id="form" action="{% url 'signup' %}" method="post" novalidate>
                 {% csrf_token %}
-                <h2>Register</h2>
-                <p class="hint-text">Create your account. It's free and only takes a minute.</p>
+                <h2 id="form_heading">Register</h2>
+                <p class="hint-text" id="form_desc">Create your account. It's free and only takes a minute.</p>
 
 
 
                 <div class="form-group">
-                    <input type="text" class="form-control" name="username" placeholder="User Name"
+                    <input id="username" type="text" class="form-control" name="username" placeholder="User Name" required="required">
+                </div>
+                <div class="form-group">
+                    <input id="email" type="email" class="form-control" name="email" placeholder="Email" required="required">
+                </div>
+                <div class="form-group">
+                    <input id="password" type="password" class="form-control" name="password" placeholder="Password"
                         required="required">
                 </div>
                 <div class="form-group">
-                    <input type="email" class="form-control" name="email" placeholder="Email" required="required">
+                    <input id="confirm_password" onChange="checkPasswordMatch();" type="password" class="form-control"
+                        name="confirm_password" placeholder="Confirm Password" required="required">
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" name="password" placeholder="Password"
-                        required="required">
-                </div>
-                <div class="form-group">
-                    <input type="password" class="form-control" name="confirm_password" placeholder="Confirm Password"
-                        required="required">
-                </div>
-                <div class="form-group">
-                    <label class="checkbox-inline text-danger">
+                    <label class="checkbox-inline text-danger" id="server_messages">
                         {% if error%}
                         {{ error }}
                         {% endif %}
                     </label>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-success btn-lg btn-block">Register Now</button>
+                    <button id="form_submit_button" type="submit" class="btn btn-success btn-lg btn-block">Register Now</button>
                 </div>
             </form>
-            <div class="text-center">Already have an account? <a href="#">Sign in</a></div>
+            <div class="text-center"><span id="form_message">Already have an account?</span><a id="switch_anchor" onclick="switchForm();" href="#" id="form_switch">Sign in</a></div>
         </div>
     </div>
 </div>
+
 
 {% endblock %}
