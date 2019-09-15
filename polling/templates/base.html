@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 {% load staticfiles %}
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -14,11 +15,17 @@
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
     <title>Online Polling</title>
+    <script>
+        function logOut(){
+            console.log("Logout button clicked")
+            $("#logout").submit()
+        }
+    </script>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#"><img src="{% static 'survey.png' %}"></a>
+        <a class="navbar-brand" href="{% url 'home_page'%}"><img src="{% static 'survey.png' %}"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -37,6 +44,15 @@
                 <li class="nav-item ">
                     <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Explore</button>
                 </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item ">
+                    <button onclick="logOut()" class="btn btn-outline-info my-2 my-sm-0 ml-2" type="submit">Log Out</button>
+                    <form id="logout" method="POST" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <input type="hidden" />
+                    </form>
+                </li>
+                {% endif %}
             </ul>
         </div>
     </nav>

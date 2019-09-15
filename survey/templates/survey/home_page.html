@@ -50,10 +50,12 @@
     </script>
 <div class="row">
     <div class="col-sm-2 col-md-4 col-lg-8">This is the homepage</div>
+    {% if not user.is_authenticated %}
     <div class="col-sm-10 col-md-8 col-lg-4">
         <div class="signup-form">
             <form id="form" action="{% url 'signup' %}" method="post" novalidate>
                 {% csrf_token %}
+
                 <h2 id="form_heading">Register</h2>
                 <p class="hint-text" id="form_desc">Create your account. It's free and only takes a minute.</p>
 
@@ -87,6 +89,7 @@
             <div class="text-center"><span id="form_message">Already have an account?</span><a id="switch_anchor" onclick="switchForm();" href="#" id="form_switch">Sign in</a></div>
         </div>
     </div>
+    {% endif %}
 </div>
 
 

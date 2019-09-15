@@ -13,9 +13,9 @@ def signup(request):
             user = User.objects.get(username=username)
             return render(request,'survey/home_page.html',{"error":"Username already Taken"})
         except User.DoesNotExist:
-            user = User.objects.create_user(username, password)
+            user = User.objects.create_user(username=username,password=password)
             auth.login(request, user)
-            return redirect('home_page')
+            return render(request,'survey/create_survey_page.html')
     # return render(request, 'signup.html')
 
 def login(request):
@@ -23,10 +23,18 @@ def login(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-        html = "<html><body>Login Page"+username+" " + password +"</body></html>"
-        return HttpResponse(html)
+        user = auth.authenticate(username=username, password=password)
+        if user is not None:
+            auth.login(request, user)
+            return render(request,'survey/create_survey_page.html')
+        else:
+            return render(request,'survey/home_page.html',{"error":"Username and Password incorrect"})
+        # html = "<html><body>Login Page"+username+" " + password +"</body></html>"
+        # return HttpResponse(html)
 
 def logout(request):
-    return render(request, 'signup.html')
-    html = "<html><body>Logout Page</body></html>"
-    return HttpResponse(html)
+    if request.method == "POST":
+        auth.logout(request)
+        return redirect('home_page')
+    # html = "<html><body>Logout Page</body></html>"
+    # return HttpResponse(html)
