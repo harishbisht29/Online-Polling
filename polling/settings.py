@@ -127,3 +127,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'polling/static'),
     os.path.join(BASE_DIR, 'survey/static')
 ]
+
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_URL = '/media/'
