@@ -46,7 +46,7 @@
                 </li>
                 {% if user.is_authenticated %}
                 <li class="nav-item ">
-                    <button onclick="logOut()" class="btn btn-outline-info my-2 my-sm-0 ml-2" type="submit">Log Out</button>
+                    <button onclick="logOut()" class="btn btn-outline-info my-2 my-sm-0 ml-2" >Log Out</button>
                     <form id="logout" method="POST" action="{% url 'logout' %}">
                         {% csrf_token %}
                         <input type="hidden" />
@@ -62,7 +62,7 @@
     {% block content %}
     {% endblock %}
     <!-- Footer -->
-    <footer id="sticky-footer" class="py-4 bg-dark text-white-50">
+    <footer id="sticky-footer" class="navbar fixed-bottom py-4 bg-dark text-white-50">
         <div class="container text-center">
             <small>Copyright &copy; online polling</small>
         </div>
