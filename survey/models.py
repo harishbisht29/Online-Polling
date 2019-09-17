@@ -17,3 +17,9 @@ class Survey_Templates(models.Model):
     def date_created_pretty(self):
         return self.date_created.strftime('%b %e %Y')
     
+class Question_Survey(models.Model):
+    question = models.CharField(max_length=1000)
+    option1 = models.CharField(max_length=500)
+    option2 = models.CharField(max_length=500)
+    option3 = models.CharField(max_length=500)
+    option4 = models.CharField(max_length=500)
