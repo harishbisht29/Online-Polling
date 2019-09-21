@@ -26,11 +26,7 @@ def login(request):
         user = auth.authenticate(username=username, password=password)
         if user is not None:
             auth.login(request, user)
-            return render(request,'survey/create_survey_page.html')
-        else:
-            return render(request,'survey/home_page.html',{"error":"Username and Password incorrect"})
-        # html = "<html><body>Login Page"+username+" " + password +"</body></html>"
-        # return HttpResponse(html)
+            return redirect('home_page')
 
 def logout(request):
     if request.method == "POST":
