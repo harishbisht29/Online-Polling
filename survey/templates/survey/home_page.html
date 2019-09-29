@@ -78,6 +78,14 @@
         $("#SurveyForm").submit()
     }
 </script>
+
+<div class="text-center">
+    <a href="{% url 'pick_survey_template'%}">
+        <button type="button" class="btn btn-light btn-lg mt-3">Add Survey Page</button>
+    </a>
+
+</div>
+
 <div class="row">
     <div class="col-sm-2 col-md-4 col-lg-8">
         {% if  user.is_authenticated %}
