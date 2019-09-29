@@ -61,20 +61,35 @@
         console.log($("#quest_id").val())
         console.log($("#survey_type").val())
 
-        $("#deleteSurveyForm").submit()
-        
-        
+        $("#SurveyForm").attr("action", "{% url 'delete_question_id' %}")
+        $("#SurveyForm").submit()
+
+
+    }
+    function showSurveyPage(id, survey_type, template_id) {
+        console.log("Showing Survey Page ")
+        $("#quest_id").val(id)
+        $("#survey_type").val(survey_type)
+        $("#template_id").val(template_id)
+        console.log($("#quest_id").val())
+        console.log($("#survey_type").val())
+        console.log($("#template_id").val())
+        $("#SurveyForm").attr("action", "{% url 'show_survey_page' %}")
+        $("#SurveyForm").submit()
     }
 </script>
 <div class="row">
     <div class="col-sm-2 col-md-4 col-lg-8">
         {% if  user.is_authenticated %}
-        <table class="table ">
-            <thead>
+
+        <table class="table mt-3">
+            <thead class="thead-dark">
                 <tr>
                     <th>Survey Type</th>
                     <th>Question</th>
                     <th>Date Created</th>
+                    <th>Delete Survey</th>
+                    <th>Show Survey</th>
                 </tr>
             </thead>
             <tbody>
@@ -85,13 +100,17 @@
                     <td>{{questions.date_created}}</td>
                     <td><button onclick="deleteSurveyPage({{questions.id}},'{{questions.Survey_Type}}')"
                             class="btn btn-outline-warning my-2 my-sm-0 ml-2">Delete</button></td>
-                    <form id="deleteSurveyForm" method="POST" 
-                    action="{% url 'delete_question_id' %}">
+                    <form id="SurveyForm" method="POST" action="{% url 'delete_question_id' %}">
                         {% csrf_token %}
-                        <input type="hidden" value="-1"/>
+                        <input type="hidden" value="-1" />
                         <input id="quest_id" name="quest_id" type="hidden" value="nothing" />
                         <input id="survey_type" name="survey_type" type="hidden" value="nothing"></input>
+                        <input id="template_id" name="template_id" type="hidden" value="nothing"></input>
                     </form>
+
+                    <td><button
+                            onclick="showSurveyPage({{questions.id}},'{{questions.Survey_Type}}',{{questions.template_id}})"
+                            class="btn btn-outline-warning my-2 my-sm-0 ml-2">Show</button></td>
                 </tr>
                 {% endfor %}
 
